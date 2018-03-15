@@ -51,11 +51,35 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		MainWindow.cpp moc_MainWindow.cpp
+		MainWindow.cpp \
+		NewItemDialog.cpp \
+		Item.cpp \
+		AboutDialog.cpp \
+		SaveAsDialog.cpp moc_MainWindow.cpp \
+		moc_NewItemDialog.cpp \
+		moc_AboutDialog.cpp \
+		moc_SaveAsDialog.cpp
 OBJECTS       = main.o \
 		MainWindow.o \
-		moc_MainWindow.o
-DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
+		NewItemDialog.o \
+		Item.o \
+		AboutDialog.o \
+		SaveAsDialog.o \
+		moc_MainWindow.o \
+		moc_NewItemDialog.o \
+		moc_AboutDialog.o \
+		moc_SaveAsDialog.o
+DIST          = Resources/copyIcon.png \
+		Resources/cutIcon.png \
+		Resources/highlighterIcon.png \
+		Resources/newFileIcon.png \
+		Resources/openFileIcon.png \
+		Resources/pasteIcon.png \
+		Resources/redoIcon.png \
+		Resources/saveAsIcon.png \
+		Resources/saveFileIcon.png \
+		Resources/undoIcon.png \
+		/usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
 		/usr/lib/qt/mkspecs/common/sanitize.conf \
@@ -242,6 +266,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -261,8 +286,16 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		DivittoTasks.pro MainWindow.h main.cpp \
-		MainWindow.cpp
+		DivittoTasks.pro MainWindow.h \
+		NewItemDialog.h \
+		Item.h \
+		AboutDialog.h \
+		SaveAsDialog.h main.cpp \
+		MainWindow.cpp \
+		NewItemDialog.cpp \
+		Item.cpp \
+		AboutDialog.cpp \
+		SaveAsDialog.cpp
 QMAKE_TARGET  = DivittoTasks
 DESTDIR       = 
 TARGET        = DivittoTasks
@@ -271,7 +304,7 @@ TARGET        = DivittoTasks
 first: all
 ####### Build rules
 
-$(TARGET): ui_MainWindow.h $(OBJECTS)  
+$(TARGET): ui_MainWindow.h ui_NewItemDialog.h ui_AboutDialog.h ui_SaveAsDialog.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: DivittoTasks.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -461,6 +494,7 @@ Makefile: DivittoTasks.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -672,6 +706,7 @@ Makefile: DivittoTasks.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -710,9 +745,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents MainWindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp MainWindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents MainWindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents MainWindow.h NewItemDialog.h Item.h AboutDialog.h SaveAsDialog.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp MainWindow.cpp NewItemDialog.cpp Item.cpp AboutDialog.cpp SaveAsDialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents MainWindow.ui NewItemDialog.ui AboutDialog.ui SaveAsDialog.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -744,24 +779,55 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_MainWindow.cpp
+compiler_moc_header_make_all: moc_MainWindow.cpp moc_NewItemDialog.cpp moc_AboutDialog.cpp moc_SaveAsDialog.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_MainWindow.cpp
-moc_MainWindow.cpp: MainWindow.h \
+	-$(DEL_FILE) moc_MainWindow.cpp moc_NewItemDialog.cpp moc_AboutDialog.cpp moc_SaveAsDialog.cpp
+moc_MainWindow.cpp: NewItemDialog.h \
+		Item.h \
+		SaveAsDialog.h \
+		MainWindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/divitto/Projects/C++/DivittoTasks/src/DivittoTasks -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include MainWindow.h -o moc_MainWindow.cpp
+
+moc_NewItemDialog.cpp: Item.h \
+		NewItemDialog.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/divitto/Projects/C++/DivittoTasks/src/DivittoTasks -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include NewItemDialog.h -o moc_NewItemDialog.cpp
+
+moc_AboutDialog.cpp: AboutDialog.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/divitto/Projects/C++/DivittoTasks/src/DivittoTasks -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include AboutDialog.h -o moc_AboutDialog.cpp
+
+moc_SaveAsDialog.cpp: SaveAsDialog.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/divitto/Projects/C++/DivittoTasks/src/DivittoTasks -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.1 -I/usr/include/c++/7.2.1/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.1/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.1/include-fixed -I/usr/include SaveAsDialog.h -o moc_SaveAsDialog.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_MainWindow.h
+compiler_uic_make_all: ui_MainWindow.h ui_NewItemDialog.h ui_AboutDialog.h ui_SaveAsDialog.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_MainWindow.h
+	-$(DEL_FILE) ui_MainWindow.h ui_NewItemDialog.h ui_AboutDialog.h ui_SaveAsDialog.h
 ui_MainWindow.h: MainWindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic MainWindow.ui -o ui_MainWindow.h
+
+ui_NewItemDialog.h: NewItemDialog.ui \
+		/usr/bin/uic
+	/usr/bin/uic NewItemDialog.ui -o ui_NewItemDialog.h
+
+ui_AboutDialog.h: AboutDialog.ui \
+		/usr/bin/uic
+	/usr/bin/uic AboutDialog.ui -o ui_AboutDialog.h
+
+ui_SaveAsDialog.h: SaveAsDialog.ui \
+		/usr/bin/uic
+	/usr/bin/uic SaveAsDialog.ui -o ui_SaveAsDialog.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -773,15 +839,46 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-main.o: main.cpp MainWindow.h
+main.o: main.cpp MainWindow.h \
+		NewItemDialog.h \
+		Item.h \
+		SaveAsDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 MainWindow.o: MainWindow.cpp MainWindow.h \
+		NewItemDialog.h \
+		Item.h \
+		SaveAsDialog.h \
 		ui_MainWindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MainWindow.o MainWindow.cpp
 
+NewItemDialog.o: NewItemDialog.cpp NewItemDialog.h \
+		Item.h \
+		ui_NewItemDialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NewItemDialog.o NewItemDialog.cpp
+
+Item.o: Item.cpp Item.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Item.o Item.cpp
+
+AboutDialog.o: AboutDialog.cpp AboutDialog.h \
+		ui_AboutDialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o AboutDialog.o AboutDialog.cpp
+
+SaveAsDialog.o: SaveAsDialog.cpp SaveAsDialog.h \
+		ui_SaveAsDialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o SaveAsDialog.o SaveAsDialog.cpp
+
 moc_MainWindow.o: moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MainWindow.o moc_MainWindow.cpp
+
+moc_NewItemDialog.o: moc_NewItemDialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_NewItemDialog.o moc_NewItemDialog.cpp
+
+moc_AboutDialog.o: moc_AboutDialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_AboutDialog.o moc_AboutDialog.cpp
+
+moc_SaveAsDialog.o: moc_SaveAsDialog.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_SaveAsDialog.o moc_SaveAsDialog.cpp
 
 ####### Install
 

@@ -25,10 +25,33 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        MainWindow.cpp
+        MainWindow.cpp \
+    NewItemDialog.cpp \
+    Item.cpp \
+    AboutDialog.cpp \
+    SaveAsDialog.cpp
 
 HEADERS += \
-        MainWindow.h
+        MainWindow.h \
+    NewItemDialog.h \
+    Item.h \
+    AboutDialog.h \
+    SaveAsDialog.h
 
 FORMS += \
-        MainWindow.ui
+        MainWindow.ui \
+    NewItemDialog.ui \
+    AboutDialog.ui \
+    SaveAsDialog.ui
+
+DISTFILES += \
+    Resources/copyIcon.png \
+    Resources/cutIcon.png \
+    Resources/highlighterIcon.png \
+    Resources/newFileIcon.png \
+    Resources/openFileIcon.png \
+    Resources/pasteIcon.png \
+    Resources/redoIcon.png \
+    Resources/saveAsIcon.png \
+    Resources/saveFileIcon.png \
+    Resources/undoIcon.png

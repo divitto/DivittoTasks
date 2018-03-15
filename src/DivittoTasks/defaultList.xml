@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taskList>
+    <fileName>"defaultList.xml"</fileName>
+    <list>
+        <item><name>0</name><description>0</description><hasDueDate>true</hasDueDate><dueDate>1/1/00 12:00 AM</dueDate></>
+        <item><name>1</name><description>1</description><hasDueDate>false</hasDueDate></>
+        <item>
+            <name>2</name>
+            <description>2</description>
+            <hasDueDate>true</hasDueDate>
+            <dueDate>1/1/00 12:00 AM</dueDate>
+        </item>
+        <item>
+            <name>3</name>
+            <description>3</description>
+            <hasDueDate>true</hasDueDate>
+            <dueDate>1/1/00 12:00 AM</dueDate>
+        </item>
+        <item>
+            <name>4</name>
+            <description>4</description>
+            <hasDueDate>true</hasDueDate>
+            <dueDate>1/1/00 12:00 AM</dueDate>
+        </item>
+    </list>
+</taskList>
