@@ -4,7 +4,8 @@ Item::Item( QString name, QString description, bool hasDueDate, QDateTimeEdit* d
     : name( name ),
       description( description ),
       hasDueDate( hasDueDate ),
-      dueDate( dueDate )
+      dueDate( dueDate ),
+      isCompleted( false )
 {
 }
 

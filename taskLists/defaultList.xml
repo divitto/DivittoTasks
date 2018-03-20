@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taskList>
+	<fileName>/home/divitto/Projects/DivittoTasks/taskLists/defaultList.xml</fileName>
+	<list>
+		<item>
+			<name>first</name>
+			<hasDueDate>1</hasDueDate>
+			<dueDate>1/1/00 12:00 AM</dueDate>
+			<description>first on the list</description>
+			<isCompleted>1</isCompleted>
+		</item>
+		<item>
+			<name>second</name>
+			<hasDueDate>1</hasDueDate>
+			<dueDate>1/1/00 12:00 AM</dueDate>
+			<description>sdfd</description>
+			<isCompleted>1</isCompleted>
+		</item>
+		<item>
+			<name>third</name>
+			<hasDueDate>1</hasDueDate>
+			<dueDate>1/1/00 12:00 AM</dueDate>
+			<description>this is awesome!!</description>
+			<isCompleted>1</isCompleted>
+		</item>
+	</list>
+</taskList>

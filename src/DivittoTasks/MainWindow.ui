@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="3,1">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
     <item>
      <widget class="QListWidget" name="listDisplay">
       <property name="layoutMode">
@@ -33,7 +33,7 @@
      <x>0</x>
      <y>0</y>
      <width>528</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -71,11 +71,14 @@
     <addaction name="actionMove_Up"/>
     <addaction name="actionMove_Down"/>
     <addaction name="separator"/>
+    <addaction name="actionSelect_Deselect_All"/>
+    <addaction name="separator"/>
     <addaction name="menuSort"/>
     <addaction name="separator"/>
     <addaction name="actionAdd"/>
     <addaction name="actionRemove"/>
     <addaction name="actionEdit"/>
+    <addaction name="actionRemove_all_checked_items"/>
     <addaction name="separator"/>
     <addaction name="menuClipboard"/>
    </widget>
@@ -93,8 +96,9 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
+   <addaction name="actionSelect_Deselect_All"/>
    <addaction name="separator"/>
    <addaction name="actionAdd"/>
    <addaction name="actionRemove"/>
@@ -109,10 +113,16 @@
    <property name="text">
     <string>New List</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
+   </property>
   </action>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
    </property>
   </action>
   <action name="actionOpen_List">
@@ -183,6 +193,16 @@
   <action name="actionCut">
    <property name="text">
     <string>Cut</string>
+   </property>
+  </action>
+  <action name="actionRemove_all_checked_items">
+   <property name="text">
+    <string>Remove all checked items</string>
+   </property>
+  </action>
+  <action name="actionSelect_Deselect_All">
+   <property name="text">
+    <string>Select/Deselect All</string>
    </property>
   </action>
  </widget>

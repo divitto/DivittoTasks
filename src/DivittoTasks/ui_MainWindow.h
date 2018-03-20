@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'MainWindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.10.0
+** Created by: Qt User Interface Compiler version 5.10.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -45,6 +45,8 @@ public:
     QAction *actionCopy;
     QAction *actionPaste;
     QAction *actionCut;
+    QAction *actionRemove_all_checked_items;
+    QAction *actionSelect_Deselect_All;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QListWidget *listDisplay;
@@ -95,6 +97,10 @@ public:
         actionPaste->setObjectName(QStringLiteral("actionPaste"));
         actionCut = new QAction(MainWindow);
         actionCut->setObjectName(QStringLiteral("actionCut"));
+        actionRemove_all_checked_items = new QAction(MainWindow);
+        actionRemove_all_checked_items->setObjectName(QStringLiteral("actionRemove_all_checked_items"));
+        actionSelect_Deselect_All = new QAction(MainWindow);
+        actionSelect_Deselect_All->setObjectName(QStringLiteral("actionSelect_Deselect_All"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         verticalLayout = new QVBoxLayout(centralWidget);
@@ -112,12 +118,11 @@ public:
 
         verticalLayout->addWidget(descriptionDisplay);
 
-        verticalLayout->setStretch(0, 3);
         verticalLayout->setStretch(1, 1);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 528, 20));
+        menuBar->setGeometry(QRect(0, 0, 528, 24));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -132,7 +137,6 @@ public:
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        MainWindow->insertToolBarBreak(mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -150,11 +154,14 @@ public:
         menuEdit->addAction(actionMove_Up);
         menuEdit->addAction(actionMove_Down);
         menuEdit->addSeparator();
+        menuEdit->addAction(actionSelect_Deselect_All);
+        menuEdit->addSeparator();
         menuEdit->addAction(menuSort->menuAction());
         menuEdit->addSeparator();
         menuEdit->addAction(actionAdd);
         menuEdit->addAction(actionRemove);
         menuEdit->addAction(actionEdit);
+        menuEdit->addAction(actionRemove_all_checked_items);
         menuEdit->addSeparator();
         menuEdit->addAction(menuClipboard->menuAction());
         menuSort->addSeparator();
@@ -163,6 +170,7 @@ public:
         menuClipboard->addAction(actionCut);
         menuClipboard->addAction(actionCopy);
         menuClipboard->addAction(actionPaste);
+        mainToolBar->addAction(actionSelect_Deselect_All);
         mainToolBar->addSeparator();
         mainToolBar->addAction(actionAdd);
         mainToolBar->addAction(actionRemove);
@@ -181,7 +189,13 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         actionNew_List->setText(QApplication::translate("MainWindow", "New List", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionNew_List->setShortcut(QApplication::translate("MainWindow", "Ctrl+Shift+N", nullptr));
+#endif // QT_NO_SHORTCUT
         actionExit->setText(QApplication::translate("MainWindow", "Exit", nullptr));
+#ifndef QT_NO_SHORTCUT
+        actionExit->setShortcut(QApplication::translate("MainWindow", "Esc", nullptr));
+#endif // QT_NO_SHORTCUT
         actionOpen_List->setText(QApplication::translate("MainWindow", "Open List", nullptr));
         actionSave->setText(QApplication::translate("MainWindow", "Save", nullptr));
         actionSave_as->setText(QApplication::translate("MainWindow", "Save as..", nullptr));
@@ -196,6 +210,8 @@ public:
         actionCopy->setText(QApplication::translate("MainWindow", "Copy", nullptr));
         actionPaste->setText(QApplication::translate("MainWindow", "Paste", nullptr));
         actionCut->setText(QApplication::translate("MainWindow", "Cut", nullptr));
+        actionRemove_all_checked_items->setText(QApplication::translate("MainWindow", "Remove all checked items", nullptr));
+        actionSelect_Deselect_All->setText(QApplication::translate("MainWindow", "Select/Deselect All", nullptr));
         menuFile->setTitle(QApplication::translate("MainWindow", "Fi&le", nullptr));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Edit", nullptr));
         menuSort->setTitle(QApplication::translate("MainWindow", "Sort", nullptr));

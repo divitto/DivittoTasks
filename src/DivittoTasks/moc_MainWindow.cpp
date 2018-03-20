@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'MainWindow.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.10.0)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.10.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'MainWindow.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.10.0. It"
+#error "This file was generated using the moc from 5.10.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[19];
-    char stringdata0[394];
+    QByteArrayData data[26];
+    char stringdata0[533];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,7 +49,14 @@ QT_MOC_LITERAL(14, 292, 23), // "on_actionSave_triggered"
 QT_MOC_LITERAL(15, 316, 14), // "setCurrentFile"
 QT_MOC_LITERAL(16, 331, 8), // "fileName"
 QT_MOC_LITERAL(17, 340, 29), // "on_actionClose_List_triggered"
-QT_MOC_LITERAL(18, 370, 23) // "on_actionEdit_triggered"
+QT_MOC_LITERAL(18, 370, 23), // "on_actionEdit_triggered"
+QT_MOC_LITERAL(19, 394, 43), // "on_actionRemove_all_checked_i..."
+QT_MOC_LITERAL(20, 438, 35), // "on_actionSelect_Deselct_All_t..."
+QT_MOC_LITERAL(21, 474, 4), // "flag"
+QT_MOC_LITERAL(22, 479, 10), // "closeEvent"
+QT_MOC_LITERAL(23, 490, 12), // "QCloseEvent*"
+QT_MOC_LITERAL(24, 503, 5), // "event"
+QT_MOC_LITERAL(25, 509, 23) // "on_actionExit_triggered"
 
     },
     "MainWindow\0on_actionAdd_triggered\0\0"
@@ -64,7 +71,11 @@ QT_MOC_LITERAL(18, 370, 23) // "on_actionEdit_triggered"
     "on_actionSave_as_triggered\0"
     "on_actionSave_triggered\0setCurrentFile\0"
     "fileName\0on_actionClose_List_triggered\0"
-    "on_actionEdit_triggered"
+    "on_actionEdit_triggered\0"
+    "on_actionRemove_all_checked_items_triggered\0"
+    "on_actionSelect_Deselct_All_toggled\0"
+    "flag\0closeEvent\0QCloseEvent*\0event\0"
+    "on_actionExit_triggered"
 };
 #undef QT_MOC_LITERAL
 
@@ -74,7 +85,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      18,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -82,20 +93,24 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   84,    2, 0x08 /* Private */,
-       3,    0,   85,    2, 0x08 /* Private */,
-       4,    1,   86,    2, 0x08 /* Private */,
-       7,    1,   89,    2, 0x08 /* Private */,
-       8,    1,   92,    2, 0x08 /* Private */,
-       9,    0,   95,    2, 0x08 /* Private */,
-      10,    0,   96,    2, 0x08 /* Private */,
-      11,    0,   97,    2, 0x08 /* Private */,
-      12,    0,   98,    2, 0x08 /* Private */,
-      13,    0,   99,    2, 0x08 /* Private */,
-      14,    0,  100,    2, 0x08 /* Private */,
-      15,    1,  101,    2, 0x08 /* Private */,
-      17,    0,  104,    2, 0x08 /* Private */,
-      18,    0,  105,    2, 0x08 /* Private */,
+       1,    0,  104,    2, 0x08 /* Private */,
+       3,    0,  105,    2, 0x08 /* Private */,
+       4,    1,  106,    2, 0x08 /* Private */,
+       7,    1,  109,    2, 0x08 /* Private */,
+       8,    1,  112,    2, 0x08 /* Private */,
+       9,    0,  115,    2, 0x08 /* Private */,
+      10,    0,  116,    2, 0x08 /* Private */,
+      11,    0,  117,    2, 0x08 /* Private */,
+      12,    0,  118,    2, 0x08 /* Private */,
+      13,    0,  119,    2, 0x08 /* Private */,
+      14,    0,  120,    2, 0x08 /* Private */,
+      15,    1,  121,    2, 0x08 /* Private */,
+      17,    0,  124,    2, 0x08 /* Private */,
+      18,    0,  125,    2, 0x08 /* Private */,
+      19,    0,  126,    2, 0x08 /* Private */,
+      20,    1,  127,    2, 0x08 /* Private */,
+      22,    1,  130,    2, 0x08 /* Private */,
+      25,    0,  133,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -111,6 +126,10 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   16,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void, 0x80000000 | 23,   24,
     QMetaType::Void,
 
        0        // eod
@@ -136,12 +155,16 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 11: _t->setCurrentFile((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 12: _t->on_actionClose_List_triggered(); break;
         case 13: _t->on_actionEdit_triggered(); break;
+        case 14: _t->on_actionRemove_all_checked_items_triggered(); break;
+        case 15: _t->on_actionSelect_Deselct_All_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 16: _t->closeEvent((*reinterpret_cast< QCloseEvent*(*)>(_a[1]))); break;
+        case 17: _t->on_actionExit_triggered(); break;
         default: ;
         }
     }
 }
 
-const QMetaObject MainWindow::staticMetaObject = {
+QT_INIT_METAOBJECT const QMetaObject MainWindow::staticMetaObject = {
     { &QMainWindow::staticMetaObject, qt_meta_stringdata_MainWindow.data,
       qt_meta_data_MainWindow,  qt_static_metacall, nullptr, nullptr}
 };
@@ -166,13 +189,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 18)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 18;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 18)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 18;
     }
     return _id;
 }

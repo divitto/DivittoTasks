@@ -15,6 +15,7 @@ public:
     QString description;
     bool hasDueDate;
     QDateTimeEdit* dueDate;
+    bool isCompleted;
 };
 
 #endif // ITEM_H

@@ -35,8 +35,11 @@ private slots:
     void on_actionSave_triggered();
     void setCurrentFile( QString fileName );
     void on_actionClose_List_triggered();
-
     void on_actionEdit_triggered();
+    void on_actionRemove_all_checked_items_triggered();
+    void on_actionSelect_Deselct_All_toggled( bool flag );
+    void closeEvent(QCloseEvent *event);
+    void on_actionExit_triggered();
 
 private:
     Ui::MainWindow *ui;

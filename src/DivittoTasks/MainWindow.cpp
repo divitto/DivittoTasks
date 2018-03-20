@@ -18,11 +18,18 @@ MainWindow::MainWindow(QWidget *parent) :
     mSaveAsDialog( new SaveAsDialog( ) )
 {
     ui->setupUi(this);
+    QMainWindow::setWindowTitle( "Divitto's Task Manager" );
+
 
     connect( this->mNewItemDialog, SIGNAL( createItem( Item* ) ), this, SLOT( on_newItemDialogAccept( Item* ) ) );
     connect( this->mNewItemDialog, SIGNAL( editItem( Item* ) ), this, SLOT( on_editItemDialogAccept( Item* ) ) );
     connect( this->mSaveAsDialog, SIGNAL( saveSignal( ) ), this, SLOT( on_actionSave_triggered( ) ) );
     connect( this->mSaveAsDialog, SIGNAL( saveFileNameSignal( QString ) ), this, SLOT( setCurrentFile( QString ) ) );
+
+    connect( ui->actionSelect_Deselect_All, SIGNAL( toggled(bool) ), this, SLOT( on_actionSelect_Deselct_All_toggled( bool ) ) );
+    ui->actionSelect_Deselect_All->setCheckable( true );
+    ui->actionSelect_Deselect_All->setChecked( false );
+
 }
 
 MainWindow::~MainWindow( void )
@@ -40,6 +47,7 @@ void MainWindow::on_actionRemove_triggered( void )
 {
     auto ptr = ui->listDisplay->takeItem( ui->listDisplay->currentRow( ) );
     delete ptr;
+    this->mHasChanged = true;
 }
 
 void MainWindow::on_newItemDialogAccept( Item* item )
@@ -48,6 +56,7 @@ void MainWindow::on_newItemDialogAccept( Item* item )
     listItem = new QListWidgetItem( item->name );
     ui->listDisplay->addItem( listItem );
     ui->listDisplay->setCurrentItem( listItem );
+    ui->listDisplay->currentItem()->setCheckState( Qt::Unchecked );
 
     this->mHasChanged = true;
     updateDescriptionDisplay( item );
@@ -125,6 +134,9 @@ void MainWindow::on_actionOpen_List_triggered()
         QFile* newFile = new QFile( QFileDialog::getOpenFileName( nullptr, "Open File" ), nullptr );
         if( newFile->exists( ) && newFile->open( QFile::ReadOnly ) )
         {
+            ui->listDisplay->clear( );
+            ui->descriptionDisplay->clear( );
+
             this->mCurrentFile = newFile->fileName();
             qDebug() << this->mCurrentFile << " has been set as the currentFile";
             QXmlStreamReader reader( newFile->readAll( ) );
@@ -162,6 +174,22 @@ void MainWindow::on_actionOpen_List_triggered()
                     {
                         this->items.at( ui->listDisplay->currentItem()->text() )->description = reader.readElementText( );
                         ui->descriptionDisplay->appendPlainText( reader.readElementText( ) );
+                    }
+                    else if( element == "isCompleted" )
+                    {
+                        QString flag = reader.readElementText( );
+                        if( flag == '1' )
+                        {
+                            this->items.at( ui->listDisplay->currentItem()->text() )->isCompleted = true;
+                            ui->listDisplay->currentItem()->setCheckState( Qt::Checked );
+                        }
+                        else if( flag == '0' )
+                        {
+                            this->items.at( ui->listDisplay->currentItem()->text() )->isCompleted = false;
+                            ui->listDisplay->currentItem()->setCheckState( Qt::Unchecked );
+                        }
+                        else
+                            qDebug() << "invalid data found in file!!";
                     }
                 }
             }
@@ -203,10 +231,14 @@ void MainWindow::on_actionSave_triggered()
                         auto item = this->items.at( name );
                         saveData += "\n\t\t<item>\n\t\t\t<name>" + name + "</name>\n\t\t\t<hasDueDate>" + QString::number( item->hasDueDate ) + "</hasDueDate>\n";
                         if( item->hasDueDate )
-                            saveData += ( "\t\t\t<dueDate>" + item->dueDate->text( ) + "</dueDate>\n\t\t\t<description>" + item->description + "</description>\n\t\t</item>" );
+                            saveData += ( "\t\t\t<dueDate>" + item->dueDate->text( ) + "</dueDate>\n\t\t\t<description>" + item->description + "</description>" );
                         else
-                            saveData += ( "\t\t\t<dueDate></dueDate>\n\t\t\t<description>" + item->description + "</description>\n\t\t</item>");
+                            saveData += ( "\t\t\t<dueDate></dueDate>\n\t\t\t<description>" + item->description + "</description>");
 
+                        if( ui->listDisplay->currentItem()->checkState() == Qt::Checked )
+                            saveData += ( "\n\t\t\t<isCompleted>1</isCompleted>\n\t\t</item>" );
+                        else
+                            saveData += ( "\n\t\t\t<isCompleted>0</isCompleted>\n\t\t</item>" );
                     }
                 }
                 saveData += "\n\t</list>\n</taskList>";
@@ -244,4 +276,63 @@ void MainWindow::on_actionEdit_triggered()
 {
     this->mNewItemDialog->setItem( this->items.at( ui->listDisplay->currentItem()->text( ) ) );
     this->mNewItemDialog->exec( );
+}
+
+void MainWindow::on_actionRemove_all_checked_items_triggered()
+{
+    int i = 0;
+    while( i < ui->listDisplay->model()->rowCount( ) )
+    {
+        ui->listDisplay->setCurrentRow( i );
+        if( ui->listDisplay->currentItem()->checkState() == Qt::Checked )
+        {
+            auto ptr = ui->listDisplay->takeItem( ui->listDisplay->currentRow( ) );
+            delete ptr;
+        }
+        else
+            i++;
+    }
+    this->mHasChanged = true;
+}
+
+void MainWindow::on_actionSelect_Deselct_All_toggled( bool flag )
+{
+    int currentRow = ui->listDisplay->currentRow( );
+    for( int i = 0; i < ui->listDisplay->model()->rowCount( ); ++i )
+    {
+        ui->listDisplay->setCurrentRow( i );
+        if( flag )
+            ui->listDisplay->currentItem( )->setCheckState( Qt::Checked );
+        else
+            ui->listDisplay->currentItem( )->setCheckState( Qt::Unchecked );
+    }
+    ui->listDisplay->setCurrentRow( currentRow );
+    this->mHasChanged = true;
+}
+
+void MainWindow::closeEvent( QCloseEvent* event )
+{
+    if( !this->mHasChanged || QMessageBox::question(nullptr, "Are you SURE?",
+                                            "You have unsaved data!\nAre you SURE you want to close the application?", QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
+    {
+        event->accept( );
+    }
+    else
+    {
+        this->mSaveAsDialog->exec( );
+        event->ignore();
+    }
+}
+
+void MainWindow::on_actionExit_triggered()
+{
+    if( !this->mHasChanged || QMessageBox::question(nullptr, "Are you SURE?",
+                                            "You have unsaved data!\nAre you SURE you want to close the application?", QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
+    {
+        this->close( );
+    }
+    else
+    {
+        this->mSaveAsDialog->exec( );
+    }
 }
