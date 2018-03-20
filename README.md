@@ -1,2 +1,2 @@
 # DivittoTasks
-A Simple task manageer or To-do list
+A Simple task manager or To-do list
